@@ -39,6 +39,7 @@ class main_window(QWidget):
         self.passwordEdit.setEchoMode(QLineEdit.Password)
 
         self.passwordButton = QPushButton('ver', self)
+        self.passwordButton.setCheckable(True)
         self.passwordButton.clicked.connect(self.view_password)
         self.passwordButton.setGeometry( col3, 90, 45, 20)
 
@@ -92,7 +93,7 @@ class main_window(QWidget):
 
     
     def view_password(self):
-        if self.passwordButton.text() == 'ver':
+        if self.passwordButton.isChecked():
             self.passwordButton.setText('ocultar')
             self.passwordEdit.setEchoMode(QLineEdit.Normal)
         else:
