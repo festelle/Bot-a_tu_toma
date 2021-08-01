@@ -11,7 +11,7 @@ if __name__ == '__main__':
     mainWindowLogic = backEnd.main_window_logic()
 
     #Se crean y conectan las señales de mainWindow
-    mainWindow.backend_signal = mainWindowLogic.backend_signal
+    mainWindow.backEnd_signal = mainWindowLogic.backEnd_signal
     mainWindowLogic.frontEnd_signal = mainWindow.frontEnd_signal
 
     #Se abre la ventana principal

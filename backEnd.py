@@ -84,7 +84,6 @@ class main_window_logic(QObject):
         
 
     def take_classes(self, driver):
-        #DESDE ESTE PUNTO EN ADELANTE COMIENZA LA NUEVA FUNCIÓN DE TOMAR RAMOS
         #Una vez que es la hora, se mide el tiempo que se demora
         initial_time = time.clock()
         #Se selecciona el periodo de inscripción actual, se puede modificar para dar opción

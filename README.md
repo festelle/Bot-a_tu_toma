@@ -6,9 +6,9 @@ App that automates the process of selecting classes for the Pontificia Universid
 
 ## General Description
 
-App that automates the process of selecting classes for the Pontificia Universidad Católica de Chile. using the Selenium module for python.
+App that automates the process of selecting classes for the Pontificia Universidad Católica de Chile using the Selenium module for python.
 
-It is capable to finish the process in under 2 seconds, while doing it manually take more than 10 seconds.
+It is capable to finish the process in under 2 seconds, while doing it manually takes more than 10 seconds.
 
 ## Descripción
 
