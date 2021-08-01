@@ -4,6 +4,7 @@ import optparse
 from PyQt5.QtCore import pyqtSignal, Qt, QThread, QTimer, QRect, QTime
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QPushButton, QLineEdit, QHBoxLayout, QVBoxLayout, QComboBox, \
     QDateTimeEdit, QTimeEdit)
+from PyQt5.QtGui import QIcon
 import random
 import time
 import datetime
@@ -20,6 +21,7 @@ class main_window(QWidget):
     def init_gui(self):
         #Se crea la ventana inicial
         self.setWindowTitle('Bot-a tu toma')
+        self.setWindowIcon(QIcon('Bot-a.png'))
         self.setGeometry(100, 100, 400, 450)
 
         col1 = 25
@@ -76,6 +78,9 @@ class main_window(QWidget):
         self.countdownLabel = QLabel('', self)
         self.countdownLabel.move(75, 400)
 
+        self.authorLabel = QLabel('Creado por F. Estelle', self)
+        self.authorLabel.setGeometry((400-100)/2, 425, 100, 20)
+
     def index (self, data):
         #se interpreta la orden que la señal manda
         pass
@@ -83,13 +88,17 @@ class main_window(QWidget):
     def button_click(self):
         #No se permiten cambiar los datos
         self.deactivate()
+
         #Se esconde la ventana (para poder mostrar la ventana, hay que hacer el siguiente paso con threading)
         self.hide()
+        
 
         #Se mandan los datos en un thread y se espera a que se inicie el proceso
         data = ['start_process', self.userEdit.text(), self.passwordEdit.text(), self.editNRC1.text(), \
             self.editNRC2.text(), self.editNRC3.text(), self.startTimeEdit.text()]
         self.backEnd_signal.emit(data)
+
+        
 
     
     def view_password(self):
