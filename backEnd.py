@@ -35,9 +35,10 @@ class main_window_logic(QObject):
         # Se crea una instancia de driver
         driver = webdriver.Chrome(ChromeDriverManager().install())
         # Se prepara la cuenta
-        self.prepare_account(driver)
-        # Con la cuenta preparada se toman los ramos
-        self.take_classes(driver)
+        prepare = self.prepare_account(driver)
+        if prepare != 'error':
+            # Con la cuenta preparada se toman los ramos
+            self.take_classes(driver)
 
 
     def prepare_account(self, driver):
@@ -70,8 +71,12 @@ class main_window_logic(QObject):
         submitButton = driver.find_element_by_xpath("/html/body/div[3]/form/p/input")
         submitButton.click()
         time.sleep(1)
-        botonAgregarClases = driver.find_element_by_link_text("Agregar o Eliminar Clases")
-        botonAgregarClases.click()
+        try:
+            botonAgregarClases = driver.find_element_by_link_text("Agregar o Eliminar Clases")
+            botonAgregarClases.click()
+        except:
+            print('\n\n USUARIO O CLAVE UC INCORRECTA \n\n')
+            return 'error'
 
         
         #Se espera que sea la hora correcta para empezar la toma de ramos
@@ -79,6 +84,7 @@ class main_window_logic(QObject):
         start_datetime = str(datetime.datetime.now())[0:11] + self.start_time
         while now != start_datetime:
             now = str(datetime.datetime.now())[0:16]
+
         
  
         
@@ -90,30 +96,34 @@ class main_window_logic(QObject):
         submitButton = driver.find_element_by_xpath("/html/body/div[3]/form/input")
         submitButton.click()
 
-        #Se selecciona el plan de estudio
-        planMenu = driver.find_element_by_id("st_path_id")
-        #SOLO FUNCIONA PARA APRETAR LA SEGUNDA OPCION QUE APARECE EN EL MENU
-        ####    REVISAR SI FUNCIONA PARA SEGUNDO SEMETRE    ####
-        planMenu.find_element_by_xpath("/html/body/div[3]/form/table/tbody/tr[2]/td/select/option[2]").click()
+        try: 
+            #Se selecciona el plan de estudio
+            planMenu = driver.find_element_by_id("st_path_id")
+            #SOLO FUNCIONA PARA APRETAR LA SEGUNDA OPCION QUE APARECE EN EL MENU
+            ####    REVISAR SI FUNCIONA PARA SEGUNDO SEMETRE    ####
+            planMenu.find_element_by_xpath("/html/body/div[3]/form/table/tbody/tr[2]/td/select/option[2]").click()
 
 
-        sendButton = driver.find_element_by_xpath("/html/body/div[3]/form/input[19]")
-        sendButton.click()
+            sendButton = driver.find_element_by_xpath("/html/body/div[3]/form/input[19]")
+            sendButton.click()
 
-        #Se ingresan los ramos a tomar
-        inputClass1 = driver.find_element_by_id("crn_id1")
-        inputClass1.send_keys(self.NRC1)
+            #Se ingresan los ramos a tomar
+            inputClass1 = driver.find_element_by_id("crn_id1")
+            inputClass1.send_keys(self.NRC1)
 
-        inputClass2 = driver.find_element_by_id("crn_id2")
-        inputClass2.send_keys(self.NRC2)
+            inputClass2 = driver.find_element_by_id("crn_id2")
+            inputClass2.send_keys(self.NRC2)
 
-        inputClass3 = driver.find_element_by_id("crn_id3")
-        inputClass3.send_keys(self.NRC3)
+            inputClass3 = driver.find_element_by_id("crn_id3")
+            inputClass3.send_keys(self.NRC3)
 
-        #Se aprieta el botón de enviar cambios
-        sendButton = driver.find_element_by_xpath('/html/body/div[3]/form/input[19]')
-        sendButton.click()
+            #Se aprieta el botón de enviar cambios
+            sendButton = driver.find_element_by_xpath('/html/body/div[3]/form/input[19]')
+            sendButton.click()
 
-        #Se calcula e imprime tiempo demorado en toma
-        final_time = time.clock() - initial_time
-        print('Tiempo demorado en tomar los ramos:', final_time)
+            #Se calcula e imprime tiempo demorado en toma
+            final_time = time.clock() - initial_time
+            print('Tiempo demorado en tomar los ramos:', final_time)
+
+        except:
+            print('\n\n OCURRIÓ UN ERROR (ES LA HORA CORRECTA?) \n\n')
