@@ -78,6 +78,13 @@ class main_window(QWidget):
         self.countdownLabel = QLabel('', self)
         self.countdownLabel.move(75, 400)
 
+        linkTemplate = '<a href={0}>{1}</a>'
+
+        self.repositoryLabel = QLabel('', self)
+        self.repositoryLabel.setOpenExternalLinks(True)
+        self.repositoryLabel.setText(linkTemplate.format('https://github.com/festelle/Bot-a_tu_toma', 'Ver código en github'))
+        self.repositoryLabel.setGeometry((400-100)/2, 400, 100, 20)
+
         self.authorLabel = QLabel('Creado por F. Estelle', self)
         self.authorLabel.setGeometry((400-100)/2, 425, 100, 20)
 
