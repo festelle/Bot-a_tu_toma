@@ -31,7 +31,7 @@ class main_window_logic(QObject):
 
         # Se guarda la data entregada
         self.user, self.password, self.NRC1 = data[1], data[2], data[3]
-        self.NRC2, self.NRC3, self.start_time = data[4], data[5], data[6]
+        self.NRC2, self.NRC3, self.start_time, self.start_time_obj = data[4], data[5], data[6], data[7]
         # Se crea una instancia de driver
         driver = webdriver.Chrome(ChromeDriverManager().install())
         # Se prepara la cuenta
@@ -56,12 +56,27 @@ class main_window_logic(QObject):
         # submitButton = driver.find_element_by_name("submit")
         # submitButton.click()
 
+        
+
+
         #Se mueve hasta la sección de agregar y eliminar ramos
         driver.get('https://ssb.uc.cl/ERPUC/twbkwbis.P_WWWLogin')
+
+        # Se comienza el proceso 3 minutos antes de que comience la hora de la toma de ramos
+        
+        
+        time_start = datetime.datetime.combine(datetime.date.today(), self.start_time_obj) - datetime.timedelta(minutes=3)
+        now = datetime.datetime.now()
+        if (time_start-now).total_seconds() > 0:
+            userBox = driver.find_element_by_id("UserID")
+            userBox.click()
+            userBox.send_keys(f'Proceso comenzará a las {time_start.time().hour}:{time_start.time().minute}')
+            time.sleep((time_start-now).total_seconds())
 
         #Se vuelve a ingresar
         userBox = driver.find_element_by_id("UserID")
         userBox.click()
+        userBox.clear()
         userBox.send_keys(self.user)
 
         passBox = driver.find_element_by_name("PIN")
@@ -80,10 +95,10 @@ class main_window_logic(QObject):
 
         
         #Se espera que sea la hora correcta para empezar la toma de ramos
-        now = str(datetime.datetime.now())[0:16]
-        start_datetime = str(datetime.datetime.now())[0:11] + self.start_time
-        while now != start_datetime:
-            now = str(datetime.datetime.now())[0:16]
+        time_start = datetime.datetime.combine(datetime.date.today(), self.start_time_obj)
+        now = datetime.datetime.now()
+        if (time_start-now).total_seconds() > 0:
+            time.sleep((time_start-now).total_seconds())
 
         
  

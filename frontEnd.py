@@ -82,7 +82,8 @@ class main_window(QWidget):
 
         self.repositoryLabel = QLabel('', self)
         self.repositoryLabel.setOpenExternalLinks(True)
-        self.repositoryLabel.setText(linkTemplate.format('https://github.com/festelle/Bot-a_tu_toma', 'Ver código en github'))
+        self.repositoryLabel.setText(linkTemplate.format('https://github.com/festelle/Bot-a_tu_toma', \
+             'Ver código en github'))
         self.repositoryLabel.setGeometry((400-100)/2, 400, 100, 20)
 
         self.authorLabel = QLabel('Creado por F. Estelle', self)
@@ -102,7 +103,7 @@ class main_window(QWidget):
 
         #Se mandan los datos en un thread y se espera a que se inicie el proceso
         data = ['start_process', self.userEdit.text(), self.passwordEdit.text(), self.editNRC1.text(), \
-            self.editNRC2.text(), self.editNRC3.text(), self.startTimeEdit.text()]
+            self.editNRC2.text(), self.editNRC3.text(), self.startTimeEdit.text(), self.startTimeEdit.time().toPyTime()]
         self.backEnd_signal.emit(data)
 
         
