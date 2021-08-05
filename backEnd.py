@@ -99,10 +99,16 @@ class main_window_logic(QObject):
         now = datetime.datetime.now()
         if (time_start-now).total_seconds() > 0:
             time.sleep((time_start-now).total_seconds())
+        
+        # Se revisa que efectivamente sea la hora correcta
+        now = str(datetime.datetime.now())[0:16]
+        start_time = str(datetime.datetime.now())[0:11] + self.start_time
+        while now != start_time:
+            now = str(datetime.datetime.now())[0:16]
 
-        
- 
-        
+
+
+
 
     def take_classes(self, driver):
         #Una vez que es la hora, se mide el tiempo que se demora
